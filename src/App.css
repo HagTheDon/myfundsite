@@ -1,38 +1,112 @@
-.App {
-  text-align: center;
+body {
+  font-size: 14px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.center-title {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.home-cards {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar-menu {
+  background-color: #fff;
+}
+body {
+  background-color: #f5f4f8 !important;
+}
+.avatar-xs {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.avatar-xl {
+  height: 5rem;
+  width: 5rem;
+}
+.header-bg {
+  background-color: #754ffe;
+}
+.rating-color {
+  color: #ffaa46;
+}
+.rating-size {
+  font-size: 0.8rem;
+}
+.course-footer-color {
+  color: #616161;
+}
+.footer {
+  color: #5c5776;
+}
+.nav-footer .nav-link {
+  color: #5c5776;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  padding: 0.2rem 1rem;
+}
+.active-footer {
+  color: #754ffe;
+}
+
+a {
+  font-style: inherit;
+  color: inherit;
+  background-color: transparent;
+  font-size: inherit;
+  text-decoration: none;
+  font-variant: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  border-radius: inherit;
+  border: inherit;
+  outline: inherit;
+  box-shadow: inherit;
+  padding: inherit;
+  vertical-align: inherit;
+}
+.content-card {
+  background: #ffffff;
+  border-radius: 0.3rem;
+}
+.course-content {
+  margin-top: -50px !important;
+}
+
+.course-sidebar {
+  margin-top: -100px !important;
+}
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #754ffe;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: #754ffe;
+}
+
+a:hover {
+  color: #754ffe;
+}
+
+.nav-link {
+  color: #754ffe;
 }
