@@ -34,7 +34,7 @@ const CourseSidebar = () => {
             <del className='fs-4 text-muted'>15,000 UGX</del>
           </div>
           <div className='d-grid'>
-            <a href='#' className='btn btn-primary mb-2'>
+            <a href='/' className='btn btn-primary mb-2'>
               Start Free Month
             </a>
             <a href='pricing.html' className='btn btn-outline-primary'>
@@ -82,7 +82,7 @@ const CourseSidebar = () => {
                 className='avatar-xl'
               />
               <a
-                href='#'
+                href='/'
                 className='position-absolute mt-2 ms-n3'
                 data-bs-toggle='tooltip'
                 data-placement='top'

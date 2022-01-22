@@ -7,8 +7,6 @@ import {
   Col,
 } from 'react-bootstrap';
 import {
-  ArrowRight,
-  Star,
   StarFill,
   StarHalf,
   Clock,
@@ -58,7 +56,7 @@ const SingleTrending = () => {
                 <span>Juanita Bell</span>
               </Col>
               <Col md='auto'>
-                <a href='#' className='text-muted bookmark'>
+                <a href='/' className='text-muted bookmark'>
                   <Bookmark />
                 </a>
               </Col>

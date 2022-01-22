@@ -1,4 +1,4 @@
-import { Tab, Row, Col, Nav, Container, Card } from 'react-bootstrap';
+import { Tab, Row, Col, Nav, Container } from 'react-bootstrap';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';

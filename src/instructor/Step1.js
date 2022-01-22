@@ -1,4 +1,4 @@
-import { Card, ListGroup, Accordion, Button } from 'react-bootstrap';
+import { Card, Accordion, Button } from 'react-bootstrap';
 
 const Step1 = () => {
   return (

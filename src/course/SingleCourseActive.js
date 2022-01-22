@@ -2,77 +2,18 @@ import {
   Row,
   Col,
   Container,
-  Accordion,
   Card,
-  Tabs,
-  Tab,
 } from 'react-bootstrap';
+import Presentation from './Presentation';
 
-import { StarFill, StarHalf } from 'react-bootstrap-icons';
-import AccordionTopic from './AccordionTopic';
-import ReactPlayer from 'react-player';
+import TableOfContents from './TableOfContents';
 
 const SingleCourseActive = () => {
   return (
     <Container>
       <Row className='justify-content-md-center pb-8 mt-3'>
-        <Col md={3}>
-          <h3>Table of Contents</h3>
-          <Accordion defaultActiveKey='0' flush>
-            <AccordionTopic
-              id='1'
-              title='Introduction to Javascript'
-              lessons={[
-                {
-                  id: '1',
-                  title: 'Javascript arrays',
-                  duration: '1m 7s',
-                },
-                {
-                  id: '2',
-                  title: 'Data structures and algos',
-                  duration: '5m 6s',
-                },
-                { id: '3', title: 'Good theory', duration: '10m 7s' },
-              ]}
-            />
-            <AccordionTopic
-              id='2'
-              title='Javascript Syntax'
-              lessons={[
-                {
-                  id: '1',
-                  title: 'Javascript arrays',
-                  duration: '1m 7s',
-                },
-                {
-                  id: '2',
-                  title: 'Data structures and algos',
-                  duration: '5m 6s',
-                },
-                { id: '3', title: 'Good theory', duration: '10m 7s' },
-              ]}
-            />
-            <AccordionTopic
-              id='3'
-              title='Algorithms in Javascript'
-              lessons={[
-                {
-                  id: '1',
-                  title: 'Javascript arrays',
-                  duration: '1m 7s',
-                },
-                {
-                  id: '2',
-                  title: 'Data structures and algos',
-                  duration: '5m 6s',
-                },
-                { id: '3', title: 'Good theory', duration: '10m 7s' },
-              ]}
-            />
-          </Accordion>
-        </Col>
-        <Col className='py-5'>
+        <TableOfContents />
+        <Col>
             <Row>
                 <Col md={6}>
           <p>Javascript Arrays</p>
@@ -81,119 +22,12 @@ const SingleCourseActive = () => {
                 Share this course | Help
             </Col>
             </Row>
-          <div className='player-wrapper'>
-            <ReactPlayer
-              className='react-player'
-              url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
-              width='100%'
-              height='100%'
-            />
-          </div>
+            <Presentation />
           <Card>
             <Card.Body>
-              <Tabs
-                defaultActiveKey='profile'
-                id='uncontrolled-tab-example'
-                className='mb-3'
-              >
-                <Tab eventKey='requirements' title='Requirements'></Tab>
-                <Tab eventKey='transcript' title='Transcript'>
-                  <div>
-                    <div className='mb-4'>
-                      <h3 className='mb-2'>Transcript</h3>
-                      <p>
-                        If you’re learning to program for the first time, or if
-                        you’re coming from a different language, this course,
-                        JavaScript: Getting Started, will give you the basics
-                        for coding in JavaScript. First, you'll discover the
-                        types of applications that can be built with JavaScript,
-                        and the platforms they’ll run on.
-                      </p>
-                      <p>
-                        Next, you’ll explore the basics of the language, giving
-                        plenty of examples. Lastly, you’ll put your JavaScript
-                        knowledge to work and modify a modern, responsive web
-                        page. When you’re finished with this course, you’ll have
-                        the skills and knowledge in JavaScript to create simple
-                        programs, create simple web applications, and modify web
-                        pages.
-                      </p>
-                    </div>
-                    <h4 className='mb-3'>What you’ll learn</h4>
-                    <div className='row mb-3'>
-                      <div className='col-12 col-md-6'>
-                        <ul className='list-unstyled'>
-                          <li className='d-flex mb-2'>
-                            <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                            <span>
-                              Recognize the importance of understanding your
-                              objectives when addressing an audience.
-                            </span>
-                          </li>
-                          <li className='d-flex mb-2'>
-                            <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                            <span>
-                              Identify the fundaments of composing a successful
-                              close.
-                            </span>
-                          </li>
-                          <li className='d-flex mb-2'>
-                            <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                            <span>
-                              Explore how to connect with your audience through
-                              crafting compelling stories.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className='col-12 col-md-6'>
-                        <ul className='list-unstyled'>
-                          <li className='d-flex mb-2'>
-                            <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                            <span>
-                              Examine ways to connect with your audience by
-                              personalizing your content.
-                            </span>
-                          </li>
-                          <li className='d-flex mb-2'>
-                            <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                            <span>
-                              Break down the best ways to exude executive
-                              presence.
-                            </span>
-                          </li>
-                          <li className='d-flex mb-2'>
-                            <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                            <span>
-                              Explore how to communicate the unknown in an
-                              impromptu communication.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <p>
-                      Maecenas viverra condimentum nulla molestie condimentum.
-                      Nunc ex libero, feugiat quis lectus vel, ornare euismod
-                      ligula. Aenean sit amet arcu nulla.
-                    </p>
-                    <p>
-                      Duis facilisis ex a urna blandit ultricies. Nullam
-                      sagittis ligula non eros semper, nec mattis odio
-                      ullamcorper. Phasellus feugiat sit amet leo eget
-                      consectetur.
-                    </p>
-                  </div>
-                </Tab>
-                <Tab eventKey='discussion' title='Discussion'>
-                  <div
-                    className='tab-pane fade active show'
-                    id='review'
-                    role='tabpanel'
-                    aria-labelledby='review-tab'
-                  >
+             
                     <div className='mb-3'>
-                      <h3 className='mb-4'>Discussion Forum</h3>
+                      <h3 className='mb-4'>Questions</h3>
                     </div>
 
                     <hr className='my-4' />
@@ -285,9 +119,6 @@ const SingleCourseActive = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Tab>
-              </Tabs>
             </Card.Body>
           </Card>
         </Col>

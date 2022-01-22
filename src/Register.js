@@ -1,7 +1,30 @@
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import {useSelector, useDispatch} from 'react-redux';
+import {decrement, increment} from './store/slices/counterSlice';
 const Register = () => {
+
+  const count = useSelector((state) => state.counter.value)
+  const dispatch = useDispatch()
+
   return (
     <Container>
+       <Row>
+       <Col md={8} className='offset-md-2'>
+        <Button variant='danger'
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </Button>
+        <span>{count}</span>
+        <Button variant='danger'
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}
+        >
+          Decrement
+        </Button>
+        </Col>
+      </Row>
     <Row className='mt-3'>
         <Col md={8} className='offset-md-2'>
             <h3>Register</h3>

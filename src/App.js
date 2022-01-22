@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './header/Header';
-import { Container } from 'react-bootstrap';
 import Home from './home/Home';
 import Login from './Login';
 import Register from './Register';
@@ -14,6 +13,7 @@ import Support from './pages/Support';
 import Feedback from './pages/Feedback';
 import SingleCourse from './course/SingleCourse';
 import SingleCourseActive from './course/SingleCourseActive';
+import Presentation from './course/Presentation';
 import Footer from './footer/Footer';
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
         <Route path='terms' element={<Terms />} />
         <Route path='support' element={<Support />} />
         <Route path='feedback' element={<Feedback />} />
+        <Route path='presentation' element={<Presentation />} />
       </Routes>
       <Footer />
     </>

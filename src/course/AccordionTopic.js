@@ -1,6 +1,5 @@
 import { Accordion } from 'react-bootstrap';
 import AccordionLesson from './AccordionLesson';
-import { PlayCircle } from 'react-bootstrap-icons';
 const AccordionTopic = ({ id, title, lessons }) => {
   // eslint-disable-next-line array-callback-return
   const lessonShow = lessons.map((item) => {
