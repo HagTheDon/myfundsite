@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   Row,
   Col,
@@ -6,26 +7,50 @@ import {
   Tabs,
   Tab,
   Accordion,
+  Button,
+  Image,
+  Alert
 } from 'react-bootstrap';
-import { StarFill, StarHalf } from 'react-bootstrap-icons';
-import AccordionTopic from './AccordionTopic';
-import CourseSidebar from './CourseSidebar';
+import { StarFill, StarHalf,Star, PlayCircle,
+  Award,
+  Calendar,
+  CameraVideo,
+  Clock,
+  PatchCheckFill, } from 'react-bootstrap-icons';
+import { useGetCourseQuery, useEnrollInCourseMutation } from '../store/services/birdflapApi';
+import {useParams, useNavigate} from 'react-router-dom';
+import Rating from 'react-rating';
+import NumberFormat from 'react-number-format';
+import { useSelector, useDispatch } from 'react-redux';
 
 const SingleCourse = () => {
+  const navigate = useNavigate();
+  const token =  useSelector((state) => state.auth.token);
+  let { id } = useParams();
+  const {data, error, isLoading, isError, isSuccess} = useGetCourseQuery(id);
+  const [enrollInCourse, {data: enrollData, error: enrollError, isLoading: enrollIsLoading, isSuccess: enrollIsSuccess, isError: enrollIsError},] = useEnrollInCourseMutation();
+  if (enrollIsSuccess) {
+    navigate(`/studies/${data.id}`);
+  };
+  if (isError) console.log(error);
+ 
+
   return (
+    <>
+    {isLoading && <p>Loading..</p>}
+    {isError && <p>An error occured..</p>}
+    {isSuccess &&
     <>
       <div className='header-bg text-secondary px-4 py-5'>
         <Container>
           <Row className='py-2'>
             <Col md={10} className='offset-1'>
               <h1 className='display-5 fw-bold text-white'>
-                Getting Started with JavaScript
+              {data.title}
               </h1>
               <div className='col-md-8'>
                 <p className='text-white-50 mb-4 lead'>
-                  JavaScript is the popular programming language which powers
-                  web pages and web applications. This course will get you
-                  started coding in JavaScript.
+                {data.description}
                 </p>
               </div>
             </Col>
@@ -38,153 +63,25 @@ const SingleCourse = () => {
             <Card>
               <Card.Body>
                 <Tabs
-                  defaultActiveKey='profile'
+                  defaultActiveKey='description'
                   id='uncontrolled-tab-example'
                   className='mb-3'
                 >
-                  <Tab eventKey='content' title='Content'>
-                    <Accordion defaultActiveKey='0'>
-                      <AccordionTopic
-                        id='1'
-                        title='Introduction to Javascript'
-                        lessons={[
-                          {
-                            id: '1',
-                            title: 'Javascript arrays',
-                            duration: '1m 7s',
-                          },
-                          {
-                            id: '2',
-                            title: 'Data structures and algos',
-                            duration: '5m 6s',
-                          },
-                          { id: '3', title: 'Good theory', duration: '10m 7s' },
-                        ]}
-                      />
-                      <AccordionTopic
-                        id='2'
-                        title='Javascript Syntax'
-                        lessons={[
-                          {
-                            id: '1',
-                            title: 'Javascript arrays',
-                            duration: '1m 7s',
-                          },
-                          {
-                            id: '2',
-                            title: 'Data structures and algos',
-                            duration: '5m 6s',
-                          },
-                          { id: '3', title: 'Good theory', duration: '10m 7s' },
-                        ]}
-                      />
-                      <AccordionTopic
-                        id='3'
-                        title='Algorithms in Javascript'
-                        lessons={[
-                          {
-                            id: '1',
-                            title: 'Javascript arrays',
-                            duration: '1m 7s',
-                          },
-                          {
-                            id: '2',
-                            title: 'Data structures and algos',
-                            duration: '5m 6s',
-                          },
-                          { id: '3', title: 'Good theory', duration: '10m 7s' },
-                        ]}
-                      />
-                    </Accordion>
-                  </Tab>
-                  <Tab eventKey='description' title='Description'>
+                   <Tab eventKey='description' title='Description'>
                     <div>
                       <div className='mb-4'>
-                        <h3 className='mb-2'>Course Descriptions</h3>
-                        <p>
-                          If you’re learning to program for the first time, or
-                          if you’re coming from a different language, this
-                          course, JavaScript: Getting Started, will give you the
-                          basics for coding in JavaScript. First, you'll
-                          discover the types of applications that can be built
-                          with JavaScript, and the platforms they’ll run on.
-                        </p>
-                        <p>
-                          Next, you’ll explore the basics of the language,
-                          giving plenty of examples. Lastly, you’ll put your
-                          JavaScript knowledge to work and modify a modern,
-                          responsive web page. When you’re finished with this
-                          course, you’ll have the skills and knowledge in
-                          JavaScript to create simple programs, create simple
-                          web applications, and modify web pages.
-                        </p>
+                        <p>{data.description}</p>
                       </div>
-                      <h4 className='mb-3'>What you’ll learn</h4>
-                      <div className='row mb-3'>
-                        <div className='col-12 col-md-6'>
-                          <ul className='list-unstyled'>
-                            <li className='d-flex mb-2'>
-                              <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                              <span>
-                                Recognize the importance of understanding your
-                                objectives when addressing an audience.
-                              </span>
-                            </li>
-                            <li className='d-flex mb-2'>
-                              <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                              <span>
-                                Identify the fundaments of composing a
-                                successful close.
-                              </span>
-                            </li>
-                            <li className='d-flex mb-2'>
-                              <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                              <span>
-                                Explore how to connect with your audience
-                                through crafting compelling stories.
-                              </span>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className='col-12 col-md-6'>
-                          <ul className='list-unstyled'>
-                            <li className='d-flex mb-2'>
-                              <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                              <span>
-                                Examine ways to connect with your audience by
-                                personalizing your content.
-                              </span>
-                            </li>
-                            <li className='d-flex mb-2'>
-                              <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                              <span>
-                                Break down the best ways to exude executive
-                                presence.
-                              </span>
-                            </li>
-                            <li className='d-flex mb-2'>
-                              <i className='far fa-check-circle text-success me-2 mt-2'></i>
-                              <span>
-                                Explore how to communicate the unknown in an
-                                impromptu communication.
-                              </span>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p>
-                        Maecenas viverra condimentum nulla molestie condimentum.
-                        Nunc ex libero, feugiat quis lectus vel, ornare euismod
-                        ligula. Aenean sit amet arcu nulla.
-                      </p>
-                      <p>
-                        Duis facilisis ex a urna blandit ultricies. Nullam
-                        sagittis ligula non eros semper, nec mattis odio
-                        ullamcorper. Phasellus feugiat sit amet leo eget
-                        consectetur.
-                      </p>
                     </div>
                   </Tab>
+                  <Tab eventKey='requirements' title='Requirements'>
+                  <div>
+                      <div className='mb-4'>
+                    <p>{data.requirements}</p>
+                    </div>
+                  </div>
+                  </Tab>
+                 
                   <Tab eventKey='reviews' title='Reviews'>
                     <div
                       className='tab-pane fade active show'
@@ -192,266 +89,60 @@ const SingleCourse = () => {
                       role='tabpanel'
                       aria-labelledby='review-tab'
                     >
-                      <div className='mb-3'>
-                        <h3 className='mb-4'>
+                      <div className='mb-1'>
+                        <h5 className='mb-1'>
                           How students rated this courses
-                        </h3>
+                        </h5>
                         <div className='row align-items-center'>
                           <div className='col-auto text-center'>
-                            <h3 className='display-2 fw-bold'>4.5</h3>
-                            <i className='mdi mdi-star me-n1 text-warning'></i>
-                            <i className='mdi mdi-star me-n1 text-warning'></i>
-                            <i className='mdi mdi-star me-n1 text-warning'></i>
-                            <i className='mdi mdi-star me-n1 text-warning'></i>
-                            <i className='mdi mdi-star me-n1-half text-warning'></i>
-                            <p className='mb-0 fs-6'>(Based on 27 reviews)</p>
+                            <h3 className='display-5'>{data.rating.average_rating}</h3>
+                            
                           </div>
-
-                          <div className='col pt-3 order-3 order-md-2'>
-                            <div
-                              className='progress mb-3'
-                              style={{ height: '6px' }}
-                            >
-                              <div
-                                className='progress-bar bg-warning'
-                                role='progressbar'
-                                style={{ width: '90%' }}
-                                aria-valuenow='90'
-                                aria-valuemin='0'
-                                aria-valuemax='100'
-                              ></div>
-                            </div>
-                            <div
-                              className='progress mb-3'
-                              style={{ height: '6px' }}
-                            >
-                              <div
-                                className='progress-bar bg-warning'
-                                role='progressbar'
-                                style={{ width: '80%' }}
-                                aria-valuenow='80'
-                                aria-valuemin='0'
-                                aria-valuemax='100'
-                              ></div>
-                            </div>
-                            <div
-                              className='progress mb-3'
-                              style={{ height: '6px' }}
-                            >
-                              <div
-                                className='progress-bar bg-warning'
-                                role='progressbar'
-                                style={{ width: '70%' }}
-                                aria-valuenow='70'
-                                aria-valuemin='0'
-                                aria-valuemax='100'
-                              ></div>
-                            </div>
-                            <div
-                              className='progress mb-3'
-                              style={{ height: '6px' }}
-                            >
-                              <div
-                                className='progress-bar bg-warning'
-                                role='progressbar'
-                                style={{ width: '60%' }}
-                                aria-valuenow='60'
-                                aria-valuemin='0'
-                                aria-valuemax='100'
-                              ></div>
-                            </div>
-                            <div
-                              className='progress mb-0'
-                              style={{ height: '6px' }}
-                            >
-                              <div
-                                className='progress-bar bg-warning'
-                                role='progressbar'
-                                style={{ width: '50%' }}
-                                aria-valuenow='50'
-                                aria-valuemin='0'
-                                aria-valuemax='100'
-                              ></div>
-                            </div>
-                          </div>
-                          <div className='col-md-auto col-6 order-2 order-md-3'>
-                            <div>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                              <span className='ms-1'>53%</span>
-                            </div>
-                            <div>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                              <span className='ms-1'>36%</span>
-                            </div>
-                            <div>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                              <span className='ms-1'>9%</span>
-                            </div>
-                            <div>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                              <span className='ms-1'>3%</span>
-                            </div>
-                            <div>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                              <span className='ms-1'>2%</span>
-                            </div>
+                          <div className='col pt-1 order-3 order-md-2'>
+                          <Rating 
+                              start={0} 
+                              stop={5} 
+                              fractions={2} 
+                              placeholderRating={data.rating.average_rating} 
+                              readonly={true}
+                              emptySymbol={<Star color='#ffaa46' size={30} />}
+                              fullSymbol={<StarFill color='#ffaa46' size={30} />}
+                              placeholderSymbol={<StarFill color='#ffaa46' size={30} />} />
+                              <p className='mb-0 fs-6'>(Based on {data.rating.reviews.length} reviews)</p>
                           </div>
                         </div>
                       </div>
 
-                      <hr className='my-5' />
-                      <div className='mb-3'>
-                        <div className='d-lg-flex align-items-center justify-content-between mb-5'>
-                          <div className='mb-3 mb-lg-0'>
-                            <h3 className='mb-0'>Reviews</h3>
+                      <hr className='my-1' />
+                      <div className='mb-1'>
+                        <div className='d-lg-flex align-items-center justify-content-between mb-1'>
+                          <div className='mb-2 mb-lg-0'>
+                            <h4 className='mb-0'>Reviews</h4>
                           </div>
-                          <div>
-                            <form className='form-inline'>
-                              <div className='d-flex align-items-center me-2'>
-                                <span className='position-absolute ps-3'>
-                                  <i className='fe fe-search'></i>
-                                </span>
-                                <input
-                                  type='search'
-                                  className='form-control ps-6'
-                                  placeholder='Search Review'
-                                />
+                        </div>
+                        {isSuccess && data.rating.reviews.map((item) => {
+                            return (                          
+                              <div className='d-flex border-bottom pb-2 mb-1' key={item.id}>
+                              
+                              <div className=' ms-3'>
+                                <p>
+                                <Rating 
+                              start={0} 
+                              stop={5} 
+                              fractions={2} 
+                              placeholderRating={item.rating} 
+                              readonly={true}
+                              emptySymbol={<Star color='#ffaa46' size={20} />}
+                              fullSymbol={<StarFill color='#ffaa46' size={20} />}
+                              placeholderSymbol={<StarFill color='#ffaa46' size={20} />} />
+                              ({item.rating})</p>
+                                <p>
+                                  {item.review}
+                                </p>
+                                <p>{item.date}</p>
                               </div>
-                            </form>
-                          </div>
-                        </div>
-
-                        <div className='d-flex border-bottom pb-4 mb-4'>
-                          <img
-                            src='../assets/images/avatar/avatar-2.jpg'
-                            alt=''
-                            className='rounded-circle avatar-lg'
-                          />
-                          <div className=' ms-3'>
-                            <h4 className='mb-1'>
-                              Max Hawkins
-                              <span className='ms-1 fs-6 text-muted'>
-                                2 Days ago
-                              </span>
-                            </h4>
-                            <div className='fs-6 mb-2'>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                            </div>
-                            <p>
-                              Lectures were at a really good pace and I never
-                              felt lost. The instructor was well informed and
-                              allowed me to learn and navigate Figma easily.
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className='d-flex border-bottom pb-4 mb-4'>
-                          <img
-                            src='../assets/images/avatar/avatar-3.jpg'
-                            alt=''
-                            className='rounded-circle avatar-lg'
-                          />
-                          <div className=' ms-3'>
-                            <h4 className='mb-1'>
-                              Arthur Williamson{' '}
-                              <span className='ms-1 fs-6 text-muted'>
-                                3 Days ago
-                              </span>
-                            </h4>
-                            <div className='fs-6 mb-2'>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                            </div>
-                            <p>
-                              Its pretty good.Just a reminder that there are
-                              also students with Windows, meaning Figma its a
-                              bit different of yours. Thank you!
-                            </p>
-                          </div>
-                        </div>
-                        <div className='d-flex border-bottom pb-4 mb-4'>
-                          <img
-                            src='../assets/images/avatar/avatar-4.jpg'
-                            alt=''
-                            className='rounded-circle avatar-lg'
-                          />
-                          <div className=' ms-3'>
-                            <h4 className='mb-1'>
-                              Claire Jones{' '}
-                              <span className='ms-1 fs-6 text-muted'>
-                                4 Days ago
-                              </span>
-                            </h4>
-                            <div className='fs-6 mb-2'>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                            </div>
-                            <p>
-                              Great course for learning Figma, the only bad
-                              detail would be that some icons are not included
-                              in the assets. But 90% of the icons needed are
-                              included, and the voice of the instructor was very
-                              clear and easy to understood.
-                            </p>
-                          </div>
-                        </div>
-                        <div className='d-flex'>
-                          <img
-                            src='../assets/images/avatar/avatar-5.jpg'
-                            alt=''
-                            className='rounded-circle avatar-lg'
-                          />
-                          <div className=' ms-3'>
-                            <h4 className='mb-1'>
-                              Bessie Pena
-                              <span className='ms-1 fs-6 text-muted'>
-                                5 Days ago
-                              </span>
-                            </h4>
-                            <div className='fs-6 mb-2'>
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarFill color='#ffaa46' size={14} />
-                              <StarHalf color='#ffaa46' size={14} />
-                            </div>
-                            <p>
-                              I have really enjoyed this className and learned a
-                              lot, found it very inspiring and helpful, thank
-                              you!
-                            </p>
-                          </div>
-                        </div>
+                            </div>);
+                          })}
                       </div>
                     </div>
                   </Tab>
@@ -459,9 +150,107 @@ const SingleCourse = () => {
               </Card.Body>
             </Card>
           </Col>
-          <CourseSidebar />
+          <Col md={3} className='mt-3 course-sidebar'>
+      <Card className='mb-3 mb-4'>
+        <div className='p-1'>
+          <div
+            className='d-flex justify-content-center position-relative rounded py-10 border-white border rounded-3 bg-cover'
+            style={{
+              background: 'url(../assets/images/course/course-javascript.jpg);',
+            }}
+          >
+            <a
+              className='popup-youtube icon-shape rounded-circle btn-play icon-xl text-decoration-none'
+              href='https://www.youtube.com/watch?v=JRzWRZahOVU'
+            >
+              <i className='fe fe-play'></i>
+            </a>
+          </div>
+        </div>
+        <Card.Body>
+          <div className='mb-3'>
+          {enrollIsSuccess && <Alert variant='success'>Success.</Alert>}
+          {enrollIsError && <Alert variant='danger'>Failed.</Alert>}
+          <span className='text-dark fw-bold h2'>
+          <NumberFormat value={data.price} displayType={'text'} thousandSeparator={true} suffix='UGX' />
+          </span>
+            <br />
+            <del className='fs-4 text-muted'>
+            <NumberFormat value={data.price+5000} displayType={'text'} thousandSeparator={true} suffix='UGX' />
+            </del>
+          </div>
+          <div className='d-grid'>
+            <Button variant='warning' className='mb-2' onClick={() => enrollInCourse({body:{course_id: data.id}, token:token})}>
+              Buy Course
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
+      <Card className='mb-4'>
+        <div>
+          <div className='card-header'>
+            <h4 className='mb-0'>Summary</h4>
+          </div>
+          <ul className='list-group list-group-flush'>
+            <li className='list-group-item bg-transparent'>
+              <PlayCircle className='align-middle me-2 text-primary' />
+              {data.language.title}
+            </li>
+            <li className='list-group-item bg-transparent'>
+              <Award className='me-2 align-middle text-success' />
+              {data.category.title}
+            </li>
+            <li className='list-group-item bg-transparent'>
+              <Calendar className='fe fe-calendar align-middle me-2 text-info' />
+              {data.level.title}
+            </li>
+            <li className='list-group-item bg-transparent'>
+              <CameraVideo className='align-middle me-2 text-secondary' />
+              <NumberFormat value={data.students} displayType={'text'} thousandSeparator={true} suffix=' students'/>
+            </li>
+            <li className='list-group-item bg-transparent border-bottom-0'>
+              <Clock className='align-middle me-2 text-warning' />
+              Lifetime access
+            </li>
+          </ul>
+        </div>
+      </Card>
+      <Card>
+        <Card.Header>
+          <h4 className='mb-0'>Instructor</h4>
+        </Card.Header>
+        <Card.Body>
+          <div className='d-flex align-items-center'>
+            <div className='position-relative'>
+              <Image
+                src={`./assets/${data.user.picture_url}`}
+                roundedCircle
+                className='avatar-xl'
+              />
+              <a
+                href='/'
+                className='position-absolute mt-2 ms-n3'
+                data-bs-toggle='tooltip'
+                data-placement='top'
+                title=''
+                data-bs-original-title='Verifed'
+              >
+              </a>
+            </div>
+            <div className='ms-4'>
+              <h5 className='mb-0'>{data.user.fullname}</h5>
+              <p className='mb-1 fs-6'>Front-end Developer, Designer</p>
+              <Button variant='outline-secondary'>View Details</Button>
+            </div>
+          </div>
+         
+        </Card.Body>
+      </Card>
+    </Col>
         </Row>
       </Container>
+      </>
+}
     </>
   );
 };

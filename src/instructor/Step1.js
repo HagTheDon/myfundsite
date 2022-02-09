@@ -1,6 +1,10 @@
 import { Card, Accordion, Button } from 'react-bootstrap';
+import { setActiveTab} from '../store/slices/instructorSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Step1 = () => {
+  const dispatch = useDispatch();
+
   return (
     <Card>
       <Card.Header as='h5'>Get Started</Card.Header>
@@ -43,7 +47,7 @@ const Step1 = () => {
           </Accordion.Item>
         </Accordion>
         <hr className='my-4' />
-        <Button variant='warning'>Proceed to Introduction</Button>
+        <Button variant='warning' onClick={() => dispatch(setActiveTab('step2-create-course'))}>Proceed to Introduction</Button>
       </Card.Body>
     </Card>
   );

@@ -1,6 +1,72 @@
-import { Card, Form } from 'react-bootstrap';
+import React, {useState, useRef} from 'react';
+import { Card, Form, Alert, Button } from 'react-bootstrap';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useGetCategoriesQuery, useGetLanguagesQuery, useGetLevelsQuery, useAddCourseMutation } from '../store/services/birdflapApi';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+//Form validation rules
+const schema = Yup.object().shape({
+  title: Yup.string().required('Required').max(200, 'Must be 200 characters or less'),
+  category_id: Yup.string().required('Required'),
+  price: Yup.string(),
+  language_id: Yup.string().required('Required'),
+  level_id: Yup.string().required('Required'),
+  summary: Yup.string().required('Required'),
+  description: Yup.string().required('Required'),
+  requirements: Yup.string().required('Required'),
+  image_url:  Yup.string().required('Required').max(200, 'Must be 200 characters or less'),
+});
 
 const Step2 = () => {
+  
+  const { data:categories, 
+    error:errorCategories,
+    isLoading: isLoadingCategories, 
+    isError: isErrorCategories, 
+    isSuccess:isSuccessCategories 
+      } = useGetCategoriesQuery();
+  const { data:levels, 
+    error:errorLevels,
+    isLoading: isLoadingLevels, 
+    isError: isErrorLevels, 
+    isSuccess:isSuccessLevels
+  } = useGetLevelsQuery();
+  const { data:languages, 
+    error:errorLanguages,
+    isLoading: isLoadingLanguages, 
+    isError: isErrorLanguages, 
+    isSuccess:isSuccessLanguages
+  } = useGetLanguagesQuery();
+
+  //add the course
+    const token =  useSelector((state) => state.auth.token);
+     const navigate = useNavigate();
+     const [addCourse, {data, error, isLoading, isSuccess, isError},] = useAddCourseMutation();
+     if (isSuccess) {
+       console.log('course data', data);
+       navigate(`/instructor/${data.id}`);
+     };
+     if (isError) console.log('Error adding course', error);
+
+  const config = {
+    readonly: false // all options from https://xdsoft.net/jodit/doc/
+  }
+
+  const Content = () => {
+    if (isLoadingLevels || isLoadingLanguages || isLoadingCategories)
+      return (
+        <Alert variant='warning'>Loading ...</Alert>
+      )
+    else
+      if (isErrorCategories || isErrorLanguages || isErrorLevels)
+      return (
+        <Alert variant='warning'>Something went wrong with loading ...</Alert>
+      )
+      else
   return (
     <Card>
       <Card.Header as='h5'>Introduction</Card.Header>
@@ -9,71 +75,164 @@ const Step2 = () => {
           Add the initial information a user sees before subscribing to a
           course.
         </Card.Subtitle>
-        <Form>
-          <h5>Instructor Details</h5>
-          <Form.Group className='mb-3' controlId='fullName'>
-            <Form.Label>Full Name</Form.Label>
-            <Form.Control type='text' placeholder='John Doe' />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
-            <Form.Label>Biography</Form.Label>
-            <Form.Control as='textarea' rows={3} />
-          </Form.Group>
+        <Formik
+      initialValues = {{
+        title: '',
+        category_id: '',
+        price: '',
+        language_id: '',
+        level_id: '',
+        summary:'',
+        description: '',
+        requirements: '',
+        image_url: '',
+      }}
+      validationSchema = {schema}
+      onSubmit={(values, { resetForm }) => {
+        addCourse({body:values, token:token});
+    }}
+      >
+         {({
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        setFieldValue,
+        values,
+        touched,
+        isValid,
+        errors,
+      }) => (
+        <Form noValidate onSubmit={handleSubmit}>
+          {isError && <Alert variant='info'>Something went wrong with adding course.</Alert>}
           <h5>Course Details</h5>
           <Form.Group className='mb-3' controlId='courseTitle'>
             <Form.Label>Course Title</Form.Label>
-            <Form.Control type='text' placeholder='Course Title' />
+            <Form.Control 
+              type='text' 
+              name='title'
+              value={values.title}
+              onChange={handleChange}
+              isInvalid={!!errors.title} />
+              <Form.Text className="text-danger">
+                {errors.title}
+              </Form.Text>
           </Form.Group>
           <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
             <Form.Label>Course Category</Form.Label>
-            <Form.Select aria-label='Default select example'>
+            <Form.Select 
+              name='category_id'
+              onChange={handleChange}
+              value={values.category_id}
+              isInvalid={!!errors.category_id}>
               <option>Select Category</option>
-              <option value='1'>Farming</option>
-              <option value='2'>Medical</option>
-              <option value='3'>Entrepreneurship</option>
-              <option value='3'>Information Technology</option>
+              {isSuccessCategories && categories.map((category) => {
+                return(<option value={category.id} key={category.id}>{category.title}</option>)
+              })}
             </Form.Select>
+            <Form.Text className="text-danger">
+                {errors.category_id}
+              </Form.Text>
           </Form.Group>
           <Form.Group className='mb-3' controlId='courseTitle'>
             <Form.Label>Course Price (UGX)</Form.Label>
-            <Form.Control type='text' placeholder='Course Price' />
+            <Form.Control 
+                type='text' 
+                name='price'
+                value={values.price}
+                onChange={handleChange}
+                isInvalid={!!errors.price} />
+                <Form.Text className="text-danger">
+                  {errors.price}
+                </Form.Text>
           </Form.Group>
-          <Form.Group controlId='formFile' className='mb-3'>
-            <Form.Label>Introduction Video</Form.Label>
-            <Form.Control type='file' />
+          <Form.Group className='mb-3' controlId='courseTitle'>
+            <Form.Label>Course Image</Form.Label>
+            <Form.Control 
+                type='text' 
+                name='image_url'
+                value={values.image_url}
+                onChange={handleChange}
+                isInvalid={!!errors.image_url} />
+                <Form.Text className="text-danger">
+                  {errors.image_url}
+                </Form.Text>
           </Form.Group>
           <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
             <Form.Label>Language of Instruction</Form.Label>
-            <Form.Select aria-label='Default select example'>
+            <Form.Select 
+              name='language_id'
+              onChange={handleChange}
+              value={values.language_id}
+              isInvalid={!!errors.language_id}>
               <option>Select Language</option>
-              <option value='1'>English</option>
-              <option value='2'>French</option>
-              <option value='3'>Swahili</option>
-              <option value='3'>Luganda</option>
+              {isSuccessLanguages && languages.map((language) => {
+                return(<option value={language.id} key={language.id}>{language.title}</option>)
+              })}
             </Form.Select>
           </Form.Group>
           <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
             <Form.Label>Course Level</Form.Label>
-            <Form.Select aria-label='Default select example'>
+            <Form.Select 
+              name='level_id'
+              onChange={handleChange}
+              value={values.level_id}
+              isInvalid={!!errors.level_id}>
               <option>Select Level</option>
-              <option value='1'>Beginner</option>
-              <option value='2'>Intermediate</option>
-              <option value='3'>Expert</option>
-              <option value='3'>Master</option>
+              {isSuccessLevels && levels.map((level) => {
+                return(<option value={level.id} key={level.id}>{level.title}</option>)
+              })}
             </Form.Select>
           </Form.Group>
+          <Form.Group className="mb-3" controlId="summaryControl">
+            <Form.Label>Summary</Form.Label>
+            <Form.Control 
+              as="textarea" 
+              rows={3} 
+              name='summary'
+              value={values.summary}
+              onChange={handleChange}
+              isInvalid={!!errors.summary}/>
+               <Form.Text className="text-danger">
+                  {errors.summary}
+                </Form.Text>
+          </Form.Group>
+          
           <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
-            <Form.Label>Course Introduction</Form.Label>
-            <Form.Control as='textarea' rows={3} />
+            <Form.Label>Description</Form.Label>
+            <ReactQuill 
+              theme="snow" 
+              value={values.description} 
+              onChange={content => {setFieldValue('description', content);}}
+              isInvalid={!!errors.description}/>
+                <Form.Text className="text-danger">
+                  {errors.description}
+                </Form.Text>
           </Form.Group>
           <Form.Group className='mb-3' controlId='exampleForm.ControlTextarea1'>
-            <Form.Label>Course Requirements</Form.Label>
-            <Form.Control as='textarea' rows={3} />
+            <Form.Label>Requirements</Form.Label>
+            <ReactQuill 
+              theme="snow" 
+              value={values.requirements} 
+              onChange={content => {setFieldValue('requirements', content);}}
+              isInvalid={!!errors.requirements}/>
+                <Form.Text className="text-danger">
+                  {errors.requirements}
+                </Form.Text>
           </Form.Group>
-       
-        </Form>
+          <Button variant='warning' type='submit'>
+            Save and Proceed
+          </Button>
+          </Form>
+    )}
+    </Formik>
       </Card.Body>
     </Card>
+  );    
+}
+  return (
+    <Content />
   );
 };
 export default Step2;
+
+

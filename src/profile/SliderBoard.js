@@ -1,31 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import useSound from 'use-sound';
+import { useSelector} from 'react-redux';
 
-const sliders = [
-  {
-    'title': 'How it got started',
-    'id': '1',
-    'content':'<h1>How it got started</h1><p>Now we see</p>',
-    'slide_audio':'creativeminds.mp3',
-    'duration': '10'
-  },
-  {
-    'title': 'Part 2',
-    'id': '2',
-    'content':'<h1>Part 2</h1><p>Now we see</p>',
-    'slide_audio':'LessonTest.m4a',
-    'duration': '15'
-  },
-  {
-    'title': 'Part 3',
-    'id': '3',
-    'content':'<h1>Part 3</h1><p>Now we see</p>',
-    'slide_audio':'creativeminds.mp3',
-    'duration': '5'
-  }
-];
-
-const Presentation = () => {
+const SliderBoard = ({sliders}) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [numberOfSlides, setNumberOfSlides] = useState(0);
   const [currentSlide, setCurrentSlide] = useState({});
@@ -37,8 +14,9 @@ const Presentation = () => {
   const [play, { stop, pause }] = useSound("./assets/courses/"+ currentSlide.slide_audio + '"');
   //Count number of slides
   useEffect(() => {
-    setNumberOfSlides(sliders.length);   
-  },[]);
+    setNumberOfSlides(sliders.length);
+    setSlideIndex(0);   
+  },[sliders]);
 
   //Move to next or previous slide item
   useEffect(() => {
@@ -47,7 +25,7 @@ const Presentation = () => {
     stop();
     setCurrentSlide(slide);
     //play sound on change slide.
-  },[slideIndex]);
+  },[slideIndex, sliders]);
 
   
   //Set the time left everytime slide changes
@@ -112,14 +90,14 @@ const Presentation = () => {
 
     return (
       <>
-        <div>
-          <p>{currentSlide.title}</p>
-          <p>{timeLeft}</p>
-          <section
-          dangerouslySetInnerHTML={{__html: currentSlide.content}}
-          />
+        <div className="shade">
+            <div className="blackboard">
+              <p>{currentSlide.title}</p>
+              <p>{timeLeft}</p>
+              <p>{currentSlide.content}</p>
+            </div>
         </div>
-        <div>
+        <div className='mt-1 p-1'>
           <Previous />
           <Next />
           <PauseSlideButton />
@@ -129,8 +107,8 @@ const Presentation = () => {
         <div>
           <p>{slideIndex + 1}/{numberOfSlides}</p>
         </div>
-        </>
+      </>       
     );
-  }
+      }
 
-  export default Presentation;
+  export default SliderBoard;

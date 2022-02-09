@@ -1,26 +1,14 @@
-import TrendingCourses from './TrendingCourses';
+import Courses from './Courses';
 import { Button } from 'react-bootstrap';
 import { Row, Container } from 'react-bootstrap';
-import { useGetCategoriesQuery } from '../store/services/staticDataApi';
+import { useGetCoursesQuery } from '../store/services/birdflapApi';
 import { Link } from 'react-router-dom';
 const Home = () => {
-  const { data, error, isLoading, isError } = useGetCategoriesQuery();
-
-  if (isError) return <div>An error has occurred!</div>
-
-  if (isLoading) return <div>Loading</div>
+  const params = {category:'', language:'', level:'', search:''};
+  const {data, error, isLoading, isError, isSuccess} = useGetCoursesQuery(params);
 
   return (
     <>
-    {data.map((categories) => (
-        <div
-          key={categories.id}
-          id={categories.id}
-        >
-          <p>Title: {categories.title}</p>
-          <p>Description: {categories.description}</p>
-       </div>
-      ))}
       <div className='header-bg text-secondary px-4 py-5 text-center'>
         <div className='py-5'>
           <h1 className='display-5 fw-bold text-white'>
@@ -41,7 +29,7 @@ const Home = () => {
               >
                 Learn More
               </Button>
-              <Link to='/create-course'>
+              <Link to='/instructor/create-course'>
                 <Button
                   variant='light'
                   size='lg'
@@ -54,9 +42,13 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div>
+        {isLoading && <p>Loading..</p>}
+        {isError && <p>An error occured..</p>}
+      </div>
       <Container>
         <Row className='justify-content-md-center pb-8'>
-          <TrendingCourses />
+        {isSuccess && <Courses data={data} />}
         </Row>
       </Container>
     </>
