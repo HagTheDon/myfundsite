@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './slices/authSlice'
-import courseReducer from './slices/courseSlice'
-import instructorReducer from './slices/instructorSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './slices/authSlice';
+import courseReducer from './slices/courseSlice';
+import instructorReducer from './slices/instructorSlice';
 // Or from '@reduxjs/toolkit/query/react'
-import { setupListeners } from '@reduxjs/toolkit/query'
-import { birdflapApi } from './services/birdflapApi'
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { myfundsiteAPI } from './services/myfundsiteAPI';
 
 export default configureStore({
   reducer: {
@@ -12,8 +12,8 @@ export default configureStore({
     course: courseReducer,
     instructor: instructorReducer,
     // Add the generated reducer as a specific top-level slice
-    [birdflapApi.reducerPath]: birdflapApi.reducer,
+    [myfundsiteAPI.reducerPath]: myfundsiteAPI.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(birdflapApi.middleware),
-})
+    getDefaultMiddleware().concat(myfundsiteAPI.middleware),
+});

@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&display=swap');
 
-body {
-  font-size: 14px;
+* {
+  font-family: 'Lato', sans-serif !important;
 }
 .center-title {
   display: flex;
@@ -19,9 +19,7 @@ body {
 .navbar-menu {
   background-color: #fff;
 }
-body {
-  background-color: #f5f4f8 !important;
-}
+
 .avatar-xs {
   height: 1.5rem;
   width: 1.5rem;
@@ -44,6 +42,9 @@ body {
 }
 .footer {
   color: #5c5776;
+}
+.footer p {
+  color: #5398e9;
 }
 .nav-footer .nav-link {
   color: #5c5776;
@@ -76,13 +77,6 @@ a {
   background: #ffffff;
   border-radius: 0.3rem;
 }
-.course-content {
-  margin-top: -50px !important;
-}
-
-.course-sidebar {
-  margin-top: -100px !important;
-}
 .player-wrapper {
   position: relative;
   padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
@@ -102,28 +96,27 @@ a {
 
 .nav-link:focus,
 .nav-link:hover {
-  color: #754ffe;
+  color: #333;
 }
 
 a:hover {
-  color: #754ffe;
+  color: #333;
 }
 
 .nav-link {
-  color: #754ffe;
+  color: #333;
 }
-
 
 /** CSS for blackboard **/
 .shade {
-  width:auto;
-  height:450px;
+  width: auto;
+  height: 450px;
 }
 
 .blackboard {
   position: relative;
   width: auto;
-  height:90%;
+  height: 90%;
   padding: 1em;
   margin-top: 0px;
   margin-bottom: 30px;
@@ -131,8 +124,25 @@ a:hover {
   border-top: #bda27e solid 12px;
   border-left: #b19876 solid 12px;
   border-bottom: #c9ad86 solid 12px;
-  box-shadow: 0px 0px 6px 5px rgba(58, 18, 13, 0), 0px 0px 0px 2px #c2a782, 0px 0px 0px 4px #a58e6f, 3px 4px 8px 5px rgba(0, 0, 0, 0.5);
-  background-image: radial-gradient( circle at left 30%, rgba(34, 34, 34, 0.3), rgba(34, 34, 34, 0.3) 80px, rgba(34, 34, 34, 0.5) 100px, rgba(51, 51, 51, 0.5) 160px, rgba(51, 51, 51, 0.5)), linear-gradient( 215deg, transparent, transparent 100px, #222 260px, #222 320px, transparent), radial-gradient( circle at right, #111, rgba(51, 51, 51, 1));
+  box-shadow: 0px 0px 6px 5px rgba(58, 18, 13, 0), 0px 0px 0px 2px #c2a782,
+    0px 0px 0px 4px #a58e6f, 3px 4px 8px 5px rgba(0, 0, 0, 0.5);
+  background-image: radial-gradient(
+      circle at left 30%,
+      rgba(34, 34, 34, 0.3),
+      rgba(34, 34, 34, 0.3) 80px,
+      rgba(34, 34, 34, 0.5) 100px,
+      rgba(51, 51, 51, 0.5) 160px,
+      rgba(51, 51, 51, 0.5)
+    ),
+    linear-gradient(
+      215deg,
+      transparent,
+      transparent 100px,
+      #222 260px,
+      #222 320px,
+      transparent
+    ),
+    radial-gradient(circle at right, #111, rgba(51, 51, 51, 1));
   background-color: #333;
 }
 
@@ -142,7 +152,25 @@ a:hover {
   position: absolute;
   width: 90%;
   height: 90%;
-  background-image: linear-gradient( 175deg, transparent, transparent 40px, rgba(120, 120, 120, 0.1) 100px, rgba(120, 120, 120, 0.1) 110px, transparent 220px, transparent), linear-gradient( 200deg, transparent 80%, rgba(50, 50, 50, 0.3)), radial-gradient( ellipse at right bottom, transparent, transparent 200px, rgba(80, 80, 80, 0.1) 260px, rgba(80, 80, 80, 0.1) 320px, transparent 400px, transparent);
+  background-image: linear-gradient(
+      175deg,
+      transparent,
+      transparent 40px,
+      rgba(120, 120, 120, 0.1) 100px,
+      rgba(120, 120, 120, 0.1) 110px,
+      transparent 220px,
+      transparent
+    ),
+    linear-gradient(200deg, transparent 80%, rgba(50, 50, 50, 0.3)),
+    radial-gradient(
+      ellipse at right bottom,
+      transparent,
+      transparent 200px,
+      rgba(80, 80, 80, 0.1) 260px,
+      rgba(80, 80, 80, 0.1) 320px,
+      transparent 400px,
+      transparent
+    );
   border: #2c2c2c solid 2px;
   font-family: 'Caveat', cursive;
   font-size: 2.2em;
@@ -158,4 +186,132 @@ a:hover {
   font-family: 'Caveat', cursive;
   font-size: 1.8em;
   color: rgba(238, 238, 238, 0.7);
+}
+
+.navbar-brand {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-right: 1rem;
+}
+
+.fundraiser {
+  background-color: #fbf8f6;
+}
+.fundraiser h3 {
+  font-weight: 300;
+  font-size: 30px;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.card-text {
+  color: #666;
+}
+
+.card h4 {
+  color: #5398e9;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.card h5 {
+  color: #333;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.home-header {
+  background-color: #f8f8f8;
+}
+.home-header h3 {
+  color: #333;
+  font-weight: 900;
+  font-size: 42px;
+}
+.home-header h4 {
+  color: #666;
+  font-weight: 900;
+  font-size: 30px;
+}
+
+.home-header span {
+  font-size: 20px;
+  color: #666;
+  font-weight: 900;
+}
+
+.discover-header {
+  background-color: #fff;
+}
+
+.discover {
+  background-color: #fbf8f6;
+}
+.discover-header h3 {
+  color: #333;
+  font-weight: 900;
+  font-size: 35px;
+}
+.discover-header h4 {
+  color: #666;
+  font-weight: 300;
+  font-size: 25px;
+}
+
+.btn-circle.btn-sm {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  font-size: 8px;
+  text-align: center;
+}
+.btn-circle.btn-md {
+  width: 50px;
+  height: 50px;
+  padding: 7px 10px;
+  border-radius: 25px;
+  font-size: 10px;
+  text-align: center;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
+}
+.bold-text {
+  font-weight: 900;
+}
+
+.tabz {
+  color: #000;
+}
+.tabz h6.section-title {
+  color: #000;
+}
+
+.tabz .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: #000;
+  background-color: transparent;
+  border-color: transparent transparent #000;
+  border-bottom: 4px solid !important;
+  font-size: 20px;
+  font-weight: bold;
+}
+.tabz .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  color: #5398e9;
+  font-size: 20px;
+}
+.colored-bg {
+  background-color: #fbf8f6;
 }
